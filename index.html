@@ -12,12 +12,7 @@
                 extend: {
                     colors: {
                         brand: { 500: '#059669', 600: '#047857' },
-                        cream: {
-                            bg: '#f8faf9',         /* 全局米白背景 */
-                            card: '#ffffff',       /* 卡片纯白 */
-                            border: '#e5e7eb',     /* 柔和边框 */
-                            muted: '#f1f5f3'       /* 侧边栏/输入框底色 */
-                        }
+                        cream: { bg: '#f8faf9', card: '#ffffff', border: '#e5e7eb' }
                     }
                 }
             }
@@ -32,30 +27,20 @@
 <body class="h-screen flex flex-col overflow-hidden">
 
     <!-- Top Navigation -->
-    <header class="h-16 border-b border-gray-200 bg-white/90 backdrop-blur flex items-center justify-between px-4 z-20 flex-shrink-0 shadow-sm">
+    <header class="h-16 border-b border-gray-200 bg-white shadow-sm flex items-center justify-between px-4 z-20 flex-shrink-0">
         <div class="flex items-center space-x-2">
-            <div class="w-7 h-7 bg-gradient-to-tr from-emerald-600 to-teal-500 rounded-lg flex items-center justify-center font-bold text-white text-sm shadow-md shadow-emerald-600/20">
-                A
-            </div>
-            <span class="font-bold text-gray-900 text-xs tracking-wide">Aegis Studio</span>
+            <div class="w-7 h-7 bg-emerald-600 rounded-lg flex items-center justify-center font-bold text-white text-sm">A</div>
+            <span class="font-bold text-gray-900 text-xs">Aegis Studio</span>
         </div>
 
         <nav class="flex items-center space-x-1 bg-gray-100 p-1 rounded-lg border border-gray-200">
-            <button onclick="switchView('studio')" id="nav-studio" class="px-3 py-1.5 rounded-md text-[11px] font-semibold bg-white text-emerald-700 shadow-sm transition">
-                <i class="fa-solid fa-code-branch mr-1"></i> 工作台
-            </button>
-            <button onclick="switchView('sheet')" id="nav-sheet" class="px-3 py-1.5 rounded-md text-[11px] font-semibold text-gray-600 hover:text-gray-900 transition">
-                <i class="fa-file-spreadsheet fa-solid mr-1 text-emerald-600"></i> 数据表
-            </button>
-            <button onclick="switchView('settings')" id="nav-settings" class="px-3 py-1.5 rounded-md text-[11px] font-semibold text-gray-600 hover:text-gray-900 transition">
-                <i class="fa-solid fa-sliders mr-1"></i> 设置与API
-            </button>
+            <button type="button" onclick="switchView('studio')" id="nav-studio" class="px-3 py-1.5 rounded-md text-[11px] font-semibold bg-white text-emerald-700 shadow-sm transition">工作台</button>
+            <button type="button" onclick="switchView('sheet')" id="nav-sheet" class="px-3 py-1.5 rounded-md text-[11px] font-semibold text-gray-600 hover:text-gray-900 transition">数据表</button>
+            <button type="button" onclick="switchView('settings')" id="nav-settings" class="px-3 py-1.5 rounded-md text-[11px] font-semibold text-gray-600 hover:text-gray-900 transition">设置与API</button>
         </nav>
 
-        <div class="flex items-center space-x-2 text-[10px]">
-            <span class="hidden sm:flex items-center text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full font-medium">
-                <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse mr-1.5"></span> Live
-            </span>
+        <div class="text-[10px] text-emerald-600 font-medium bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+            Live Ready
         </div>
     </header>
 
@@ -64,131 +49,95 @@
 
         <!-- VIEW 1: AGENT STUDIO -->
         <div id="view-studio" class="flex-1 flex w-full h-full overflow-hidden">
-            
-            <!-- Left Sidebar: Agent Manager -->
-            <aside class="w-56 border-r border-gray-200 bg-gray-50/70 flex flex-col flex-shrink-0">
-                <div class="p-2.5 border-b border-gray-200 flex justify-between items-center bg-white/50">
-                    <span class="text-[11px] font-bold text-gray-500 uppercase tracking-wider">Agents 列表</span>
-                    <button onclick="createNewAgent()" class="text-[10px] bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-2 py-0.5 rounded shadow-sm transition">
-                        <i class="fa-solid fa-plus mr-0.5"></i> 新建
-                    </button>
+            <aside class="w-56 border-r border-gray-200 bg-gray-50 flex flex-col flex-shrink-0">
+                <div class="p-2.5 border-b border-gray-200 flex justify-between items-center bg-white">
+                    <span class="text-[11px] font-bold text-gray-500 uppercase">Agents 列表</span>
+                    <button type="button" onclick="createNewAgent()" class="text-[10px] bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-2 py-0.5 rounded">新建</button>
                 </div>
                 <div id="agent-list" class="flex-1 overflow-y-auto p-2 space-y-1 custom-scrollbar"></div>
             </aside>
 
-            <!-- Center: Prompt Editor & Phone/Sheet Integration -->
             <section class="flex-1 border-r border-gray-200 flex flex-col bg-white overflow-hidden">
-                <div class="h-10 border-b border-gray-200 bg-gray-50/50 px-3 flex justify-between items-center flex-shrink-0">
+                <div class="h-10 border-b border-gray-200 bg-gray-50 px-3 flex justify-between items-center flex-shrink-0">
                     <span class="text-[11px] font-bold text-gray-700 truncate" id="current-agent-title">Agent System Logic</span>
-                    <button onclick="saveCurrentAgent()" class="text-[11px] bg-emerald-600 text-white hover:bg-emerald-700 font-bold px-3 py-1 rounded shadow-sm transition flex-shrink-0">
-                        <i class="fa-solid fa-floppy-disk mr-1"></i> 保存配置
-                    </button>
+                    <button type="button" onclick="saveCurrentAgent()" class="text-[11px] bg-emerald-600 text-white font-bold px-3 py-1 rounded">保存配置</button>
                 </div>
 
                 <div class="flex-1 p-3.5 flex flex-col space-y-3 overflow-y-auto custom-scrollbar">
                     <div class="grid grid-cols-2 gap-2.5">
                         <div>
                             <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Agent 名称</label>
-                            <input type="text" id="agent-name-input" class="w-full bg-gray-50 border border-gray-300 rounded px-2.5 py-1 text-xs text-gray-900 focus:outline-none focus:border-emerald-600 focus:bg-white">
+                            <input type="text" id="agent-name-input" class="w-full bg-gray-50 border border-gray-300 rounded px-2.5 py-1 text-xs text-gray-900">
                         </div>
                         <div>
                             <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">业务分类</label>
-                            <input type="text" id="agent-cat-input" placeholder="例如：修车厂" class="w-full bg-gray-50 border border-gray-300 rounded px-2.5 py-1 text-xs text-gray-900 focus:outline-none focus:border-emerald-600 focus:bg-white">
+                            <input type="text" id="agent-cat-input" class="w-full bg-gray-50 border border-gray-300 rounded px-2.5 py-1 text-xs text-gray-900">
                         </div>
                     </div>
 
                     <div class="flex-1 flex flex-col min-h-[140px]">
                         <label class="text-[10px] font-bold text-gray-500 uppercase mb-0.5">系统指令 Prompt</label>
-                        <textarea id="agent-prompt-input" class="flex-1 w-full bg-gray-50 font-mono text-xs text-emerald-800 p-2.5 rounded border border-gray-300 focus:outline-none focus:border-emerald-600 focus:bg-white leading-relaxed custom-scrollbar resize-none" placeholder="# Role..."></textarea>
+                        <textarea id="agent-prompt-input" class="flex-1 w-full bg-gray-50 font-mono text-xs text-gray-900 p-2.5 rounded border border-gray-300 resize-none"></textarea>
                     </div>
 
                     <div class="pt-2 border-t border-gray-200 space-y-2">
-                        <span class="text-[10px] font-bold text-gray-700 uppercase tracking-wider flex items-center">
-                            <i class="fa-solid fa-link text-emerald-600 mr-1"></i> 数据表与通知绑定
-                        </span>
-
                         <div class="grid grid-cols-2 gap-2.5">
                             <div>
                                 <label class="block text-[9px] font-bold text-gray-500 mb-0.5">Google Sheet 链接</label>
-                                <input type="text" id="agent-sheet-url" placeholder="https://docs.google.com/..." class="w-full bg-gray-50 border border-gray-300 rounded px-2 py-1 text-[11px] text-gray-800 focus:border-emerald-600 focus:bg-white">
+                                <input type="text" id="agent-sheet-url" class="w-full bg-gray-50 border border-gray-300 rounded px-2 py-1 text-[11px] text-gray-800">
                             </div>
-                            <div>
-                                <label class="block text-[9px] font-bold text-gray-500 mb-0.5">Google Sheet Webhook</label>
-                                <input type="text" id="agent-webhook-input" placeholder="https://script.google.com/..." class="w-full bg-gray-50 border border-gray-300 rounded px-2 py-1 text-[11px] text-gray-800 focus:border-emerald-600 focus:bg-white">
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-2 gap-2.5">
                             <div>
                                 <label class="block text-[9px] font-bold text-gray-500 mb-0.5">管理员手机 (转人工报警)</label>
-                                <input type="text" id="agent-phone-num" placeholder="+60123456789" class="w-full bg-gray-50 border border-gray-300 rounded px-2 py-1 text-[11px] text-gray-800 focus:border-emerald-600 focus:bg-white">
-                            </div>
-                            <div>
-                                <label class="block text-[9px] font-bold text-gray-500 mb-0.5">短信网关 Token (可选)</label>
-                                <input type="text" id="agent-sms-token" placeholder="Token" class="w-full bg-gray-50 border border-gray-300 rounded px-2 py-1 text-[11px] text-gray-800 focus:border-emerald-600 focus:bg-white">
+                                <input type="text" id="agent-phone-num" class="w-full bg-gray-50 border border-gray-300 rounded px-2 py-1 text-[11px] text-gray-800">
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Right: Live Agent Debug Sandbox -->
-            <section class="w-80 flex flex-col bg-gray-50/80 flex-shrink-0">
-                <div class="h-10 border-b border-gray-200 bg-white/60 px-3 flex justify-between items-center flex-shrink-0">
-                    <span class="text-[11px] font-bold text-gray-700 flex items-center">
-                        <i class="fa-solid fa-play text-emerald-600 mr-1.5 text-[9px]"></i> 调试沙盒
-                    </span>
-                    <button onclick="clearSandboxChat()" class="text-[10px] text-gray-400 hover:text-gray-700"><i class="fa-solid fa-rotate-right"></i></button>
+            <section class="w-80 flex flex-col bg-gray-50 flex-shrink-0">
+                <div class="h-10 border-b border-gray-200 bg-white px-3 flex justify-between items-center">
+                    <span class="text-[11px] font-bold text-gray-700">调试沙盒</span>
+                    <button type="button" onclick="clearSandboxChat()" class="text-[10px] text-gray-400">重置</button>
                 </div>
-
-                <div id="sandbox-messages" class="flex-1 p-2.5 overflow-y-auto space-y-2.5 custom-scrollbar text-xs">
-                    <div class="bg-white border border-gray-200 p-2.5 rounded-lg text-gray-600 text-[11px] shadow-sm">
-                        🤖 请先在上方【设置与API】填入 Gemini API Key，即可在此测试对话。
-                    </div>
+                <div id="sandbox-messages" class="flex-1 p-2.5 overflow-y-auto space-y-2 text-xs">
+                    <div class="bg-white border border-gray-200 p-2.5 rounded text-gray-600 text-[11px]">⚡ 已就绪，请在下方发送消息。</div>
                 </div>
-
-                <div class="p-2 border-t border-gray-200 bg-white flex gap-1.5 flex-shrink-0">
-                    <input type="text" id="sandbox-input" onkeydown="if(event.key==='Enter') sendSandboxMessage()" placeholder="输入测试指令..." class="flex-1 bg-gray-50 border border-gray-300 rounded px-2 py-1 text-xs text-gray-900 focus:outline-none focus:border-emerald-600">
-                    <button onclick="sendSandboxMessage()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded text-xs font-bold transition shadow-sm">发送</button>
+                <div class="p-2 border-t border-gray-200 bg-white flex gap-1.5">
+                    <input type="text" id="sandbox-input" onkeydown="if(event.key==='Enter') sendSandboxMessage()" placeholder="输入测试..." class="flex-1 bg-gray-50 border border-gray-300 rounded px-2 py-1 text-xs text-gray-900">
+                    <button type="button" onclick="sendSandboxMessage()" class="bg-emerald-600 text-white px-2.5 py-1 rounded text-xs font-bold">发送</button>
                 </div>
             </section>
         </div>
 
         <!-- VIEW 2: SHEET -->
         <div id="view-sheet" class="hidden flex-1 flex flex-col bg-white overflow-hidden">
-            <div class="h-11 border-b border-gray-200 px-4 flex justify-between items-center bg-gray-50 flex-shrink-0">
-                <div class="flex items-center space-x-2">
-                    <i class="fa-file-spreadsheet fa-solid text-emerald-600"></i>
-                    <span class="text-xs font-bold text-gray-900 truncate" id="sheet-title">Google Sheet 实时报表</span>
-                </div>
-                <a id="external-sheet-btn" href="#" target="_blank" class="text-[11px] bg-white hover:bg-gray-100 text-gray-700 border border-gray-300 px-2.5 py-1 rounded shadow-sm transition">
-                    新窗口打开 <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i>
-                </a>
+            <div class="h-11 border-b border-gray-200 px-4 flex justify-between items-center bg-gray-50">
+                <span class="text-xs font-bold text-gray-900" id="sheet-title">Google Sheet 实时报表</span>
+                <a id="external-sheet-btn" href="#" target="_blank" class="text-[11px] bg-white text-gray-700 border border-gray-300 px-2.5 py-1 rounded">在新窗口打开</a>
             </div>
             <div class="flex-1 w-full h-full bg-gray-100 relative">
                 <iframe id="sheet-iframe" src="about:blank" class="w-full h-full border-none"></iframe>
                 <div id="sheet-placeholder" class="absolute inset-0 flex flex-col items-center justify-center bg-white text-gray-400">
-                    <i class="fa-file-excel fa-solid text-3xl mb-2 text-gray-300"></i>
-                    <p class="text-xs">未检测到有效的 Google Sheet 链接</p>
-                    <p class="text-[10px] text-gray-400 mt-0.5">请在 Agent 设置中填入绑定的 Google Sheet URL</p>
+                    <p class="text-xs">未检测到有效的 Google Sheet 链接，请在工作台配置。</p>
                 </div>
             </div>
         </div>
 
         <!-- VIEW 3: SETTINGS -->
-        <div id="view-settings" class="hidden flex-1 p-6 overflow-y-auto custom-scrollbar max-w-xl mx-auto w-full">
+        <div id="view-settings" class="hidden flex-1 p-6 overflow-y-auto max-w-xl mx-auto w-full">
             <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
                 <h2 class="text-sm font-bold text-gray-900 mb-1">全局 API 密钥配置</h2>
-                <p class="text-[11px] text-gray-500 mb-4">在此填入你的 Google Gemini API 密钥以激活整个平台的 AI 大脑。</p>
+                <p class="text-[11px] text-gray-500 mb-4">在此填入你的 Google Gemini API 密钥。</p>
                 <div class="space-y-3 text-xs">
                     <div>
                         <label class="block font-bold text-gray-700 mb-1">Google Gemini API Key</label>
-                        <input type="password" id="global-gemini-key" placeholder="AIzaSy..." class="w-full bg-gray-50 border border-gray-300 rounded p-2 text-gray-900 focus:border-emerald-600 focus:bg-white">
+                        <input type="password" id="global-gemini-key" placeholder="AIzaSy..." class="w-full bg-gray-50 border border-gray-300 rounded p-2 text-gray-900">
                     </div>
                 </div>
                 <div class="mt-5 pt-3 border-t border-gray-200 flex justify-between items-center">
-                    <button onclick="saveGlobalSettings()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-1.5 rounded text-xs transition shadow-sm">保存设置</button>
-                    <span id="global-save-status" class="text-[11px] text-emerald-600 font-medium hidden"><i class="fa-solid fa-check mr-1"></i> 已保存</span>
+                    <button type="button" onclick="saveGlobalSettings()" class="bg-emerald-600 text-white font-bold px-4 py-1.5 rounded text-xs">保存设置</button>
+                    <span id="global-save-status" class="text-[11px] text-emerald-600 font-medium hidden">已保存</span>
                 </div>
             </div>
         </div>
@@ -197,42 +146,35 @@
 
     <script>
         let agents = JSON.parse(localStorage.getItem('aegis_agents')) || [
-            {
-                id: 'agent_default',
-                name: '修车厂 AI 预约助理',
-                category: '汽车服务',
-                prompt: '# Role\n你是修车厂 AI 助手。\n\n# Rules\n1. 引导客户提供姓名、电话、车牌号与修车日期。',
-                sheetUrl: '', webhook: '', phone: '', smsToken: ''
-            }
+            { id: 'agent_default', name: '修车厂 AI 预约助理', category: '汽车服务', prompt: '你是修车厂 AI 助手。', sheetUrl: '', phone: '' }
         ];
         let currentAgentId = agents[0]?.id || 'agent_default';
-        let sandboxHistory = [];
 
         function switchView(view) {
+            console.log("Switching view to:", view);
             ['studio', 'sheet', 'settings'].forEach(v => {
-                document.getElementById(`view-${v}`).classList.add('hidden');
-                document.getElementById(`nav-${v}`).className = "px-3 py-1.5 rounded-md text-[11px] font-semibold text-gray-600 hover:text-gray-900 transition";
+                const el = document.getElementById(`view-${v}`);
+                const nav = document.getElementById(`nav-${v}`);
+                if (el) el.classList.add('hidden');
+                if (nav) nav.className = "px-3 py-1.5 rounded-md text-[11px] font-semibold text-gray-600 hover:text-gray-900 transition";
             });
-            document.getElementById(`view-${view}`).classList.remove('hidden');
-            document.getElementById(`nav-${view}`).className = "px-3 py-1.5 rounded-md text-[11px] font-semibold bg-white text-emerald-700 shadow-sm transition";
+            const targetEl = document.getElementById(`view-${view}`);
+            const targetNav = document.getElementById(`nav-${view}`);
+            if (targetEl) targetEl.classList.remove('hidden');
+            if (targetNav) targetNav.className = "px-3 py-1.5 rounded-md text-[11px] font-semibold bg-white text-emerald-700 shadow-sm transition";
             if (view === 'sheet') updateEmbeddedSheet();
         }
 
         function renderAgentList() {
             const listEl = document.getElementById('agent-list');
+            if (!listEl) return;
             listEl.innerHTML = '';
             agents.forEach(a => {
                 const active = a.id === currentAgentId;
                 const item = document.createElement('div');
-                item.className = `p-2 rounded text-xs cursor-pointer border transition flex flex-col justify-between ${active ? 'bg-white border-emerald-500 text-emerald-900 shadow-xs font-semibold' : 'border-transparent text-gray-600 hover:bg-gray-100'}`;
+                item.className = `p-2 rounded text-xs cursor-pointer border transition flex flex-col justify-between ${active ? 'bg-white border-emerald-500 text-emerald-900 font-semibold shadow-xs' : 'border-transparent text-gray-600 hover:bg-gray-200'}`;
                 item.onclick = () => selectAgent(a.id);
-                item.innerHTML = `
-                    <div class="font-medium truncate flex items-center justify-between">
-                        <span class="truncate">${a.name}</span>
-                        ${active ? '<span class="w-1.5 h-1.5 bg-emerald-600 rounded-full flex-shrink-0"></span>' : ''}
-                    </div>
-                    <div class="text-[9px] text-gray-400 mt-0.5 truncate">${a.category || '通用'}</div>
-                `;
+                item.innerHTML = `<div class="truncate">${a.name}</div><div class="text-[9px] text-gray-400">${a.category || '通用'}</div>`;
                 listEl.appendChild(item);
             });
         }
@@ -245,12 +187,7 @@
             document.getElementById('agent-cat-input').value = agent.category || '';
             document.getElementById('agent-prompt-input').value = agent.prompt || '';
             document.getElementById('agent-sheet-url').value = agent.sheetUrl || '';
-            document.getElementById('agent-webhook-input').value = agent.webhook || '';
             document.getElementById('agent-phone-num').value = agent.phone || '';
-            document.getElementById('agent-sms-token').value = agent.smsToken || '';
-            document.getElementById('current-agent-title').innerText = `配置: ${agent.name}`;
-            sandboxHistory = [];
-            document.getElementById('sandbox-messages').innerHTML = `<div class="bg-white border border-gray-200 p-2.5 rounded-lg text-gray-600 text-[11px] shadow-xs">⚡ 已载入 ${agent.name}，可开始测试。</div>`;
             renderAgentList();
         }
 
@@ -258,14 +195,11 @@
             const agent = agents.find(a => a.id === currentAgentId);
             const iframe = document.getElementById('sheet-iframe');
             const placeholder = document.getElementById('sheet-placeholder');
-            const externalBtn = document.getElementById('external-sheet-btn');
             if (agent && agent.sheetUrl) {
                 let embedUrl = agent.sheetUrl.includes('/edit') ? agent.sheetUrl.replace('/edit', '/htmlview') : agent.sheetUrl;
                 iframe.src = embedUrl;
-                externalBtn.href = agent.sheetUrl;
                 iframe.classList.remove('hidden');
                 placeholder.classList.add('hidden');
-                document.getElementById('sheet-title').innerText = `报表: ${agent.name}`;
             } else {
                 iframe.src = 'about:blank';
                 iframe.classList.add('hidden');
@@ -275,8 +209,8 @@
 
         function createNewAgent() {
             const newId = 'agent_' + Date.now();
-            agents.push({ id: newId, name: '新 Agent', category: '分类', prompt: '# Role...', sheetUrl: '', webhook: '', phone: '', smsToken: '' });
-            saveAgentsToStorage();
+            agents.push({ id: newId, name: '新 Agent', category: '分类', prompt: '...', sheetUrl: '', phone: '' });
+            localStorage.setItem('aegis_agents', JSON.stringify(agents));
             selectAgent(newId);
         }
 
@@ -287,35 +221,54 @@
             agent.category = document.getElementById('agent-cat-input').value.trim();
             agent.prompt = document.getElementById('agent-prompt-input').value;
             agent.sheetUrl = document.getElementById('agent-sheet-url').value.trim();
-            agent.webhook = document.getElementById('agent-webhook-input').value.trim();
             agent.phone = document.getElementById('agent-phone-num').value.trim();
-            agent.smsToken = document.getElementById('agent-sms-token').value.trim();
-            saveAgentsToStorage();
+            localStorage.setItem('aegis_agents', JSON.stringify(agents));
             renderAgentList();
-            alert('✅ Agent 配置保存成功！');
+            alert('✅ 保存成功！');
         }
 
-        function saveAgentsToStorage() { localStorage.setItem('aegis_agents', JSON.stringify(agents)); }
+        function saveGlobalSettings() {
+            const key = document.getElementById('global-gemini-key').value.trim();
+            localStorage.setItem('aegis_global_gemini_key', key);
+            const status = document.getElementById('global-save-status');
+            status.classList.remove('hidden');
+            setTimeout(() => status.classList.add('hidden'), 2000);
+        }
 
         async function sendSandboxMessage() {
             const inputEl = document.getElementById('sandbox-input');
             const text = inputEl.value.trim();
             if (!text) return;
             inputEl.value = '';
-            appendSandboxMsg('user', text);
-            const activeAgent = agents.find(a => a.id === currentAgentId);
-            if (text.includes('人工') && activeAgent.phone) {
-                appendSandboxMsg('bot', `📱 已自动触发转人工警报至手机：<b>${activeAgent.phone}</b>`);
-            }
+            const box = document.getElementById('sandbox-messages');
+            box.innerHTML += `<div class="p-2 rounded bg-emerald-600 text-white ml-auto text-[11px]">${text}</div>`;
+
             const geminiKey = localStorage.getItem('aegis_global_gemini_key');
             if (!geminiKey) {
-                appendSandboxMsg('bot', '⚠️ 请先去顶部【设置与API】填入 Gemini API Key！');
+                box.innerHTML += `<div class="p-2 rounded bg-white border text-red-600 text-[11px]">⚠️ 请先去【设置与API】填入 Gemini Key</div>`;
                 return;
             }
-            appendSandboxMsg('bot', '...', 'loading-msg');
             try {
-                sandboxHistory.push({ role: "user", parts: [{ text: text }] });
                 const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON
+                    body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: text }] }] })
+                });
+                const data = await res.json();
+                const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "无响应";
+                box.innerHTML += `<div class="p-2 rounded bg-white border text-gray-800 text-[11px]">${reply}</div>`;
+            } catch(e) {
+                box.innerHTML += `<div class="p-2 rounded bg-white border text-red-600 text-[11px]">请求出错</div>`;
+            }
+            box.scrollTop = box.scrollHeight;
+        }
+
+        window.onload = () => {
+            const savedKey = localStorage.getItem('aegis_global_gemini_key');
+            if (savedKey) document.getElementById('global-gemini-key').value = savedKey;
+            renderAgentList();
+            selectAgent(currentAgentId);
+        };
+    </script>
+</body>
+</html>
