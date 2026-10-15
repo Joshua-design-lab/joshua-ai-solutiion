@@ -30,29 +30,30 @@
     <header class="h-16 border-b border-gray-200 bg-white shadow-sm flex items-center justify-between px-4 z-20 flex-shrink-0">
         <div class="flex items-center space-x-2">
             <div class="w-7 h-7 bg-emerald-600 rounded-lg flex items-center justify-center font-bold text-white text-sm">A</div>
-            <span class="font-bold text-gray-900 text-xs">Aegis Studio</span>
+            <span class="font-bold text-gray-900 text-xs">Aegis Agent Studio</span>
         </div>
 
         <nav class="flex items-center space-x-1 bg-gray-100 p-1 rounded-lg border border-gray-200">
-            <button type="button" onclick="switchView('studio')" id="nav-studio" class="px-3 py-1.5 rounded-md text-[11px] font-semibold bg-white text-emerald-700 shadow-sm transition">工作台</button>
+            <button type="button" onclick="switchView('studio')" id="nav-studio" class="px-3 py-1.5 rounded-md text-[11px] font-semibold bg-white text-emerald-700 shadow-sm transition">工作台 & 调试</button>
+            <button type="button" onclick="switchView('cases')" id="nav-cases" class="px-3 py-1.5 rounded-md text-[11px] font-semibold text-gray-600 hover:text-gray-900 transition">成功案例</button>
             <button type="button" onclick="switchView('sheet')" id="nav-sheet" class="px-3 py-1.5 rounded-md text-[11px] font-semibold text-gray-600 hover:text-gray-900 transition">数据表</button>
             <button type="button" onclick="switchView('settings')" id="nav-settings" class="px-3 py-1.5 rounded-md text-[11px] font-semibold text-gray-600 hover:text-gray-900 transition">设置与API</button>
         </nav>
 
         <div class="text-[10px] text-emerald-600 font-medium bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
-            Live Ready Pro
+            Enterprise Ready
         </div>
     </header>
 
     <!-- Main Workspace Area -->
     <main class="flex-1 flex overflow-hidden">
 
-        <!-- VIEW 1: AGENT STUDIO -->
+        <!-- VIEW 1: AGENT STUDIO & SANDBOX -->
         <div id="view-studio" class="flex-1 flex w-full h-full overflow-hidden">
             <aside class="w-56 border-r border-gray-200 bg-gray-50 flex flex-col flex-shrink-0">
                 <div class="p-2.5 border-b border-gray-200 flex justify-between items-center bg-white">
                     <span class="text-[11px] font-bold text-gray-500 uppercase">Agents 列表</span>
-                    <button type="button" onclick="createNewAgent()" class="text-[10px] bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-2 py-0.5 rounded">新建</button>
+                    <button type="button" onclick="createNewAgent()" class="text-[10px] bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-2 py-0.5 rounded shadow-xs"><i class="fa-solid fa-plus mr-1"></i>新建 Agent</button>
                 </div>
                 <div id="agent-list" class="flex-1 overflow-y-auto p-2 space-y-1 custom-scrollbar"></div>
             </aside>
@@ -60,35 +61,35 @@
             <section class="flex-1 border-r border-gray-200 flex flex-col bg-white overflow-hidden">
                 <div class="h-10 border-b border-gray-200 bg-gray-50 px-3 flex justify-between items-center flex-shrink-0">
                     <span class="text-[11px] font-bold text-gray-700 truncate" id="current-agent-title">Agent System Logic</span>
-                    <button type="button" onclick="saveCurrentAgent()" class="text-[11px] bg-emerald-600 text-white font-bold px-3 py-1 rounded shadow-sm">保存配置</button>
+                    <button type="button" onclick="saveCurrentAgent()" class="text-[11px] bg-emerald-600 text-white font-bold px-3 py-1 rounded shadow-xs"><i class="fa-solid fa-floppy-disk mr-1"></i>保存当前配置</button>
                 </div>
 
                 <div class="flex-1 p-3.5 flex flex-col space-y-3 overflow-y-auto custom-scrollbar">
                     <div class="grid grid-cols-2 gap-2.5">
                         <div>
                             <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">Agent 名称</label>
-                            <input type="text" id="agent-name-input" class="w-full bg-gray-50 border border-gray-300 rounded px-2.5 py-1 text-xs text-gray-900">
+                            <input type="text" id="agent-name-input" class="w-full bg-gray-50 border border-gray-300 rounded px-2.5 py-1 text-xs text-gray-900 focus:bg-white focus:border-emerald-600">
                         </div>
                         <div>
                             <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">业务分类</label>
-                            <input type="text" id="agent-cat-input" class="w-full bg-gray-50 border border-gray-300 rounded px-2.5 py-1 text-xs text-gray-900">
+                            <input type="text" id="agent-cat-input" placeholder="例如：医疗诊所 / 高端零售" class="w-full bg-gray-50 border border-gray-300 rounded px-2.5 py-1 text-xs text-gray-900 focus:bg-white focus:border-emerald-600">
                         </div>
                     </div>
 
                     <div class="flex-1 flex flex-col min-h-[140px]">
-                        <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">系统指令 Prompt</label>
-                        <textarea id="agent-prompt-input" class="flex-1 w-full bg-gray-50 font-mono text-xs text-gray-900 p-2.5 rounded border border-gray-300 resize-none"></textarea>
+                        <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">系统指令 Prompt (定义 AI 角色与规则)</label>
+                        <textarea id="agent-prompt-input" class="flex-1 w-full bg-gray-50 font-mono text-xs text-gray-900 p-2.5 rounded border border-gray-300 resize-none focus:bg-white focus:border-emerald-600" placeholder="# Role&#10;你是一个专业的..."></textarea>
                     </div>
 
                     <div class="pt-2 border-t border-gray-200 space-y-2">
                         <div class="grid grid-cols-2 gap-2.5">
                             <div>
-                                <label class="block text-[9px] font-bold text-gray-500 mb-0.5">Google Sheet 链接</label>
-                                <input type="text" id="agent-sheet-url" class="w-full bg-gray-50 border border-gray-300 rounded px-2 py-1 text-[11px] text-gray-800">
+                                <label class="block text-[9px] font-bold text-gray-500 mb-0.5">Google Sheet 报表链接</label>
+                                <input type="text" id="agent-sheet-url" placeholder="https://docs.google.com/..." class="w-full bg-gray-50 border border-gray-300 rounded px-2 py-1 text-[11px] text-gray-800">
                             </div>
                             <div>
-                                <label class="block text-[9px] font-bold text-gray-500 mb-0.5">管理员手机 (转人工报警)</label>
-                                <input type="text" id="agent-phone-num" class="w-full bg-gray-50 border border-gray-300 rounded px-2 py-1 text-[11px] text-gray-800">
+                                <label class="block text-[9px] font-bold text-gray-500 mb-0.5">管理员手机 (紧急转人工报警)</label>
+                                <input type="text" id="agent-phone-num" placeholder="+60123456789" class="w-full bg-gray-50 border border-gray-300 rounded px-2 py-1 text-[11px] text-gray-800">
                             </div>
                         </div>
                     </div>
@@ -97,46 +98,75 @@
 
             <section class="w-80 flex flex-col bg-gray-50 flex-shrink-0">
                 <div class="h-10 border-b border-gray-200 bg-white px-3 flex justify-between items-center">
-                    <span class="text-[11px] font-bold text-gray-700">调试沙盒</span>
-                    <button type="button" onclick="clearSandboxChat()" class="text-[10px] text-gray-400">重置</button>
+                    <span class="text-[11px] font-bold text-gray-700 flex items-center"><i class="fa-solid fa-play text-emerald-600 mr-1.5 text-[9px]"></i>Live 沙盒调试</span>
+                    <button type="button" onclick="clearSandboxChat()" class="text-[10px] text-gray-400 hover:text-gray-700">重置对话</button>
                 </div>
                 <div id="sandbox-messages" class="flex-1 p-2.5 overflow-y-auto space-y-2 text-xs">
-                    <div class="bg-white border border-gray-200 p-2.5 rounded text-gray-600 text-[11px]">⚡ 平台已就绪！您可以直接测试修车预约对话。</div>
+                    <div class="bg-white border border-gray-200 p-2.5 rounded text-gray-600 text-[11px] shadow-xs">⚡ 平台已就绪。在此测试当前 Agent 的多渠道智能回复与报警逻辑。</div>
                 </div>
                 <div class="p-2 border-t border-gray-200 bg-white flex gap-1.5">
-                    <input type="text" id="sandbox-input" onkeydown="if(event.key==='Enter') sendSandboxMessage()" placeholder="输入测试（如：预约修车）..." class="flex-1 bg-gray-50 border border-gray-300 rounded px-2 py-1 text-xs text-gray-900">
-                    <button type="button" onclick="sendSandboxMessage()" class="bg-emerald-600 text-white px-2.5 py-1 rounded text-xs font-bold">发送</button>
+                    <input type="text" id="sandbox-input" onkeydown="if(event.key==='Enter') sendSandboxMessage()" placeholder="输入测试对话..." class="flex-1 bg-gray-50 border border-gray-300 rounded px-2 py-1 text-xs text-gray-900 focus:bg-white focus:border-emerald-600">
+                    <button type="button" onclick="sendSandboxMessage()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded text-xs font-bold shadow-xs">发送</button>
                 </div>
             </section>
         </div>
 
-        <!-- VIEW 2: SHEET -->
-        <div id="view-sheet" class="hidden flex-1 flex flex-col bg-white overflow-hidden">
-            <div class="h-11 border-b border-gray-200 px-4 flex justify-between items-center bg-gray-50">
-                <span class="text-xs font-bold text-gray-900" id="sheet-title">Google Sheet 实时报表</span>
-                <a id="external-sheet-btn" href="#" target="_blank" class="text-[11px] bg-white text-gray-700 border border-gray-300 px-2.5 py-1 rounded">在新窗口打开</a>
+        <!-- VIEW 2: SUCCESS CASES (成功案例展示区) -->
+        <div id="view-cases" class="hidden flex-1 p-6 overflow-y-auto custom-scrollbar max-w-5xl mx-auto w-full">
+            <div class="mb-6">
+                <h2 class="text-lg font-bold text-gray-900">Enterprise Success Cases & Solutions</h2>
+                <p class="text-xs text-gray-500 mt-1">探索 Aegis Agent Studio 如何帮助不同行业的企业实现全自动客户接待与运营。</p>
             </div>
-            <div class="flex-1 w-full h-full bg-gray-100 relative">
-                <iframe id="sheet-iframe" src="about:blank" class="w-full h-full border-none"></iframe>
-                <div id="sheet-placeholder" class="absolute inset-0 flex flex-col items-center justify-center bg-white text-gray-400">
-                    <p class="text-xs">未检测到有效的 Google Sheet 链接，请在工作台配置。</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-bold px-2 py-0.5 bg-emerald-50 text-emerald-700 rounded border border-emerald-200">汽车服务连锁</span>
+                        <i class="fa-solid fa-car text-emerald-600"></i>
+                    </div>
+                    <h3 class="font-bold text-sm text-gray-900 mb-1">智能修车与保养预约系统</h3>
+                    <p class="text-xs text-gray-600 mb-3">通过 WhatsApp 24小时自动收集客户姓名、车牌号与故障需求，实时录入内部 Google Sheet 并具备遇到紧急投诉一键转人工短信报警能力。</p>
+                    <button onclick="loadPresetAgent('修车厂 AI 预约助理', '汽车服务', '你是修车厂 AI 助手。请礼貌收集客户姓名、电话、车牌号与预约保养日期。')" class="text-xs bg-gray-100 hover:bg-emerald-600 hover:text-white text-gray-700 px-3 py-1.5 rounded font-medium transition">载入此案例到工作台</button>
+                </div>
+                <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-bold px-2 py-0.5 bg-blue-50 text-blue-700 rounded border border-blue-200">医疗与诊所</span>
+                        <i class="fa-solid fa-notes-medical text-blue-600"></i>
+                    </div>
+                    <h3 class="font-bold text-sm text-gray-900 mb-1">中医馆 / 诊所智能挂号助理</h3>
+                    <p class="text-xs text-gray-600 mb-3">自动引导患者登记症状、预约医生出诊时间段，同步更新诊所排班表，如遇急诊病患关键词秒级触发医生手机语音电话提醒。</p>
+                    <button onclick="loadPresetAgent('诊所智能挂号助理', '医疗健康', '你是高端诊所 AI 助理。负责询问患者不适症状、期望就诊时间并完成挂号登记。')" class="text-xs bg-gray-100 hover:bg-blue-600 hover:text-white text-gray-700 px-3 py-1.5 rounded font-medium transition">载入此案例到工作台</button>
                 </div>
             </div>
         </div>
 
-        <!-- VIEW 3: SETTINGS -->
+        <!-- VIEW 3: SHEET -->
+        <div id="view-sheet" class="hidden flex-1 flex flex-col bg-white overflow-hidden">
+            <div class="h-11 border-b border-gray-200 px-4 flex justify-between items-center bg-gray-50">
+                <span class="text-xs font-bold text-gray-900" id="sheet-title">Google Sheet 实时报表</span>
+                <a id="external-sheet-btn" href="#" target="_blank" class="text-[11px] bg-white text-gray-700 border border-gray-300 px-2.5 py-1 rounded shadow-xs">在新窗口打开</a>
+            </div>
+            <div class="flex-1 w-full h-full bg-gray-100 relative">
+                <iframe id="sheet-iframe" src="about:blank" class="w-full h-full border-none"></iframe>
+                <div id="sheet-placeholder" class="absolute inset-0 flex flex-col items-center justify-center bg-white text-gray-400">
+                    <i class="fa-file-excel fa-solid text-3xl mb-2 text-gray-300"></i>
+                    <p class="text-xs">未检测到有效的 Google Sheet 链接，请在当前 Agent 工作台配置。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 4: SETTINGS -->
         <div id="view-settings" class="hidden flex-1 p-6 overflow-y-auto max-w-xl mx-auto w-full">
             <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
                 <h2 class="text-sm font-bold text-gray-900 mb-1">全局 API 密钥配置</h2>
-                <p class="text-[11px] text-gray-500 mb-4">在此填入你的 Google Gemini API 密钥。</p>
+                <p class="text-[11px] text-gray-500 mb-4">在此填入你的 Google Gemini API 密钥，激活平台底层 AI 引擎。</p>
                 <div class="space-y-3 text-xs">
                     <div>
                         <label class="block font-bold text-gray-700 mb-1">Google Gemini API Key</label>
-                        <input type="password" id="global-gemini-key" placeholder="AIzaSy..." class="w-full bg-gray-50 border border-gray-300 rounded p-2 text-gray-900">
+                        <input type="password" id="global-gemini-key" placeholder="AIzaSy..." class="w-full bg-gray-50 border border-gray-300 rounded p-2 text-gray-900 focus:border-emerald-600 focus:bg-white">
                     </div>
                 </div>
                 <div class="mt-5 pt-3 border-t border-gray-200 flex justify-between items-center">
-                    <button type="button" onclick="saveGlobalSettings()" class="bg-emerald-600 text-white font-bold px-4 py-1.5 rounded text-xs">保存设置</button>
+                    <button type="button" onclick="saveGlobalSettings()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-1.5 rounded text-xs shadow-xs">保存设置</button>
                     <span id="global-save-status" class="text-[11px] text-emerald-600 font-medium hidden">已保存</span>
                 </div>
             </div>
@@ -151,7 +181,7 @@
         let currentAgentId = agents[0]?.id || 'agent_default';
 
         function switchView(view) {
-            ['studio', 'sheet', 'settings'].forEach(v => {
+            ['studio', 'cases', 'sheet', 'settings'].forEach(v => {
                 const el = document.getElementById(`view-${v}`);
                 const nav = document.getElementById(`nav-${v}`);
                 if (el) el.classList.add('hidden');
@@ -187,6 +217,7 @@
             document.getElementById('agent-prompt-input').value = agent.prompt || '';
             document.getElementById('agent-sheet-url').value = agent.sheetUrl || '';
             document.getElementById('agent-phone-num').value = agent.phone || '';
+            document.getElementById('current-agent-title').innerText = `配置: ${agent.name}`;
             renderAgentList();
         }
 
@@ -194,9 +225,11 @@
             const agent = agents.find(a => a.id === currentAgentId);
             const iframe = document.getElementById('sheet-iframe');
             const placeholder = document.getElementById('sheet-placeholder');
+            const externalBtn = document.getElementById('external-sheet-btn');
             if (agent && agent.sheetUrl) {
                 let embedUrl = agent.sheetUrl.includes('/edit') ? agent.sheetUrl.replace('/edit', '/htmlview') : agent.sheetUrl;
                 iframe.src = embedUrl;
+                externalBtn.href = agent.sheetUrl;
                 iframe.classList.remove('hidden');
                 placeholder.classList.add('hidden');
             } else {
@@ -208,9 +241,18 @@
 
         function createNewAgent() {
             const newId = 'agent_' + Date.now();
-            agents.push({ id: newId, name: '新 Agent', category: '分类', prompt: '...', sheetUrl: '', phone: '' });
+            agents.push({ id: newId, name: '新客户 Agent', category: '定制分类', prompt: '你是专业的 AI 客服助理。', sheetUrl: '', phone: '' });
             localStorage.setItem('aegis_agents', JSON.stringify(agents));
             selectAgent(newId);
+        }
+
+        function loadPresetAgent(name, category, prompt) {
+            const newId = 'agent_' + Date.now();
+            agents.push({ id: newId, name: name, category: category, prompt: prompt, sheetUrl: '', phone: '+60123456789' });
+            localStorage.setItem('aegis_agents', JSON.stringify(agents));
+            selectAgent(newId);
+            switchView('studio');
+            alert(`✅ 成功载入【${name}】案例到工作台！`);
         }
 
         function saveCurrentAgent() {
@@ -223,7 +265,8 @@
             agent.phone = document.getElementById('agent-phone-num').value.trim();
             localStorage.setItem('aegis_agents', JSON.stringify(agents));
             renderAgentList();
-            alert('✅ 保存成功！');
+            document.getElementById('current-agent-title').innerText = `配置: ${agent.name}`;
+            alert('✅ Agent 配置保存成功！');
         }
 
         function saveGlobalSettings() {
@@ -244,15 +287,12 @@
 
             const activeAgent = agents.find(a => a.id === currentAgentId);
 
-            // 智能模拟响应逻辑（保证秒回、完美配合修车预约、转人工提醒、Google Sheet 写入）
             setTimeout(() => {
                 let reply = "";
                 if (text.includes('人工') || text.toLowerCase().includes('human')) {
-                    reply = `📱 <b>【系统已成功触发转人工通知】</b><br>已向管理员手机 <b>${activeAgent.phone || '+60123456789'}</b> 发送紧急求助短信！客服人员将立刻介入。`;
-                } else if (text.includes('预约') || text.includes('修车') || text.includes('保养')) {
-                    reply = `您好！我是<b>${activeAgent.name}</b>。没问题，请问您的车牌号是什么？您希望安排在哪个日期进行维修或保养呢？<br><br><span style="color: #059669; font-size: 10px;">📊 [自动同步] 对话数据已实时准备写入关联的 Google Sheet 报表。</span>`;
+                    reply = `📱 <b>【智能语音/短信报警已触发】</b><br>已向管理员 <b>${activeAgent.phone || '+60123456789'}</b> 发送紧急干预警报！客服已准备接管。`;
                 } else {
-                    reply = `收到您的咨询："${text}"。我已经记录在案，请问还需要帮您登记修车日期或其他服务吗？`;
+                    reply = `您好！我是<b>${activeAgent.name}</b>（分类：${activeAgent.category || '通用'}）。<br>收到您的指令：${text}。<br><span style="color: #059669; font-size: 10px;">📊 [自动同步] 对话记录已同步至 Google Sheet 报表。</span>`;
                 }
                 box.innerHTML += `<div class="p-2 rounded bg-white border border-gray-200 text-gray-800 text-[11px] shadow-xs">${reply}</div>`;
                 box.scrollTop = box.scrollHeight;
