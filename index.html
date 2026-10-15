@@ -248,8 +248,8 @@
                 return;
             }
             try {
-                // 使用最新稳定的 gemini-2.5-flash 模型
-                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiKey}`, {
+                // 使用 v1 稳定路径与 gemini-1.5-flash，完美匹配所有免费 API Key
+                const res = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${geminiKey}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: text }] }] })
