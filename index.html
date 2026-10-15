@@ -76,7 +76,7 @@
                     </div>
 
                     <div class="flex-1 flex flex-col min-h-[140px]">
-                        <label class="text-[10px] font-bold text-gray-500 uppercase mb-0.5">系统指令 Prompt</label>
+                        <label class="block text-[10px] font-bold text-gray-500 uppercase mb-0.5">系统指令 Prompt</label>
                         <textarea id="agent-prompt-input" class="flex-1 w-full bg-gray-50 font-mono text-xs text-gray-900 p-2.5 rounded border border-gray-300 resize-none"></textarea>
                     </div>
 
@@ -151,7 +151,6 @@
         let currentAgentId = agents[0]?.id || 'agent_default';
 
         function switchView(view) {
-            console.log("Switching view to:", view);
             ['studio', 'sheet', 'settings'].forEach(v => {
                 const el = document.getElementById(`view-${v}`);
                 const nav = document.getElementById(`nav-${v}`);
@@ -249,7 +248,8 @@
                 return;
             }
             try {
-                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey}`, {
+                // 使用最新稳定的 gemini-2.5-flash 模型
+                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiKey}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: text }] }] })
